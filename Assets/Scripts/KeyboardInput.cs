@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardInput
+public class KeyboardInput : MonoBehaviour
 {
-    public KeyCode jump     = KeyCode.Space;
-    public KeyCode left     = KeyCode.LeftArrow;
-    public KeyCode right    = KeyCode.RightArrow;
-    public KeyCode up       = KeyCode.UpArrow;
-    public KeyCode down     = KeyCode.DownArrow;
+    protected KeyCode jump     = KeyCode.Space;
+    protected KeyCode left     = KeyCode.LeftArrow;
+    protected KeyCode right    = KeyCode.RightArrow;
+    protected KeyCode up       = KeyCode.UpArrow;
+    protected KeyCode down     = KeyCode.DownArrow;
+
+
 }

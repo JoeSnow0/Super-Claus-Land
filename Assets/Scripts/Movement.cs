@@ -5,22 +5,30 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     //Speed & Direction
-    protected Vector2 mVelocity;
+    protected float mVelocity;
     protected Transform mTransform;
+    protected Collider2D mCollider;
+    protected Bounds mBounds;
+    protected GameObject mGameObject;
     protected Vector2 mPosition;
     protected float mDirection;
+    protected float mGravity = 0.0f;
+    protected float mGravityDirection = -1.0f;
   
-    private void Start()
+    virtual protected void Start()
     {
-        mPosition = new Vector2(0.0f, 0.0f);
-        mTransform = GetComponent<Transform>();
+        
     }
-    
+    virtual protected void Update()
+    {
+
+    }
+
+
     private void CalculateNewPosition()
     {
-        mVelocity.x = 10.0f;
-        mVelocity.y = mDirection;
-        mPosition = mVelocity * Time.deltaTime;
+        mPosition.x = mTransform.position.x + mVelocity * mDirection * Time.deltaTime;
+        mPosition.y = mTransform.position.y + mGravity * mGravityDirection * Time.deltaTime;
     }
     protected void Move()
     {
@@ -30,6 +38,14 @@ public class Movement : MonoBehaviour
     protected void MoveTo(Vector2 newPosition)
     {
         mTransform.position = newPosition;
+    }
+
+    private void Collision(Collider2D otherCollider)
+    {
+        if (mCollider.IsTouching(otherCollider))
+        {
+
+        }
     }
 
 }
