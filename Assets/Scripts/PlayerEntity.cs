@@ -21,9 +21,9 @@ public class PlayerEntity : Entity
     protected override void Update()
     {
         mDirection = GetDirection();
-        mAnimator.SetFloat("Speed", Mathf.Abs(mDirection));
-        mAnimator.SetBool("Grounded", mIsGrounded);
-        mAnimator.SetBool("Down", mIsDucking);
+        CheckIfGrounded();
+        UpdateAnimations();
+        
         if(mIsDucking == false)
         {
             Move();
@@ -62,9 +62,12 @@ public class PlayerEntity : Entity
     {
         mIsDucking = state;
     }
-    private void SetState(States state)
+    protected override void UpdateAnimations()
     {
-        mState = state;
+        mAnimator.SetFloat("Direction", mDirection);
+        mAnimator.SetFloat("Speed", Mathf.Abs(mForce.x));
+        mAnimator.SetBool("Grounded", mIsGrounded);
+        mAnimator.SetBool("Down", mIsDucking);
     }
     private void SetState(PowerUp powerUp)
     {

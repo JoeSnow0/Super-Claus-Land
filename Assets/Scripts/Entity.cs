@@ -12,10 +12,8 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float mVelocity;
     protected Vector2 mJumpPower;
     protected Transform mTransform;
-    protected Transform mGroundCheck;
-    protected Collider2D mGroundCheckCol;
     protected Animator mAnimator;
-    protected bool mIsGrounded;
+    [SerializeField] protected bool mIsGrounded;
     protected SpriteRenderer mSprite;
     protected Collider2D mCollider;
     protected GameObject mGameObject;
@@ -25,25 +23,26 @@ public class Entity : MonoBehaviour
     protected float mGravity = 0.0f;
     protected float mGravityDirection = -1.0f;
     protected Rigidbody2D mRigidbody;
+    private Vector2 vectorA;
+    private Vector2 vectorB;
+    [SerializeField] protected LayerMask groundLayer;
 
     protected Vector2Int mPos;
 
     virtual protected void Start()
     {
-
+       
     }
     virtual protected void Update()
     {
         
     }
-    public void InitializeMovement()
+    public void InitializeEntity()
     {
         mSprite = GetComponent<SpriteRenderer>();
         mAnimator = GetComponent<Animator>();
         mTransform = GetComponent<Transform>();
-        mGroundCheck = GetComponentInChildren<Transform>();
-        mGroundCheck.localPosition.Set(0f, mSprite.size.y, 0f);
-        mGroundCheckCol = mGroundCheck.gameObject.GetComponent<Collider2D>();
+        mCollider = GetComponent<Collider2D>();
     }
     private void CalculateNewForce()
     {
@@ -77,12 +76,22 @@ public class Entity : MonoBehaviour
     {
         return mTransform;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void CheckIfGrounded()
     {
-        mIsGrounded = true;
+        mIsGrounded = Physics2D.OverlapArea(new Vector2(transform.position.x - mCollider.bounds.size.x * 0.5f, transform.position.y * 0.5f),
+                                            new Vector2(transform.position.x + mCollider.bounds.size.x * 0.5f, (transform.position.y - mCollider.bounds.size.y) * 0.5f), 
+                                            groundLayer);
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    virtual protected void UpdateAnimations()
     {
-        mIsGrounded = false;
+
+    }
+
+
+    //Debug
+    private void OnDrawGizmos()
+    {
+        //Gizmos.color = new Color(0,1,0, 0.5f);
+        //Gizmos.DrawCube(new Vector2(0f, vectorA.y + vectorB.y * 0.5f), new Vector2(vectorB.x - vectorA.x , vectorB.y - vectorA.y));
     }
 }

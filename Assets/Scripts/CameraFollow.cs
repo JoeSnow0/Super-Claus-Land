@@ -37,7 +37,6 @@ public class CameraFollow : MonoBehaviour
         mPosition.y = yOffset;
         mPosition.z = zOffset;
         SetPosition();
-        print(mBounds);
     }
     void SetPosition()
     {
