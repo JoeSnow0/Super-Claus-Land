@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class KeyboardInput : MonoBehaviour
 {
-    protected KeyCode jump     = KeyCode.Space;
-    protected KeyCode left     = KeyCode.LeftArrow;
-    protected KeyCode right    = KeyCode.RightArrow;
-    protected KeyCode up       = KeyCode.UpArrow;
-    protected KeyCode down     = KeyCode.DownArrow;
-
-
+    public KeyCode jumpKey  = KeyCode.Space;
+    public KeyCode leftKey  = KeyCode.LeftArrow;
+    public KeyCode rightKey = KeyCode.RightArrow;
+    public KeyCode upKey    = KeyCode.UpArrow;
+    public KeyCode downKey  = KeyCode.DownArrow;
 }

@@ -48,12 +48,12 @@ public class CameraFollow : MonoBehaviour
     }
     public void CheckIfTargetInSight()
     {
-        Vector2 position = mTarget.GetTransform().position;
+        //Vector2 position = mTarget.GetTransform().position;
         
-        if (!mBounds.Contains(position))
-        {
+        //if (!mBounds.Contains(position))
+        //{
             
             MoveCamera();
-        }
+        //}
     }
 }

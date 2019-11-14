@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+
+    //Outside References
+    protected GameController mGameController;
     //Speed & Direction
     protected enum States { Standing, Walking, Ducking, Jumping };
 
@@ -23,8 +26,15 @@ public class Entity : MonoBehaviour
     protected float mGravity = 0.0f;
     protected float mGravityDirection = -1.0f;
     protected Rigidbody2D mRigidbody;
-    private Vector2 vectorA;
-    private Vector2 vectorB;
+    
+    protected bool mKeyDuck;
+    protected bool mKeyJump;
+    protected bool mKeyLeft;
+    protected bool mKeyRight;
+    protected bool mKeyRun;
+
+    Vector2 vectorPoint1;
+    Vector2 vectorPoint2;
     [SerializeField] protected LayerMask groundLayer;
 
     protected Vector2Int mPos;
@@ -37,8 +47,9 @@ public class Entity : MonoBehaviour
     {
         
     }
-    public void InitializeEntity()
+    public void InitializeEntity(GameController controller)
     {
+        mGameController = controller;
         mSprite = GetComponent<SpriteRenderer>();
         mAnimator = GetComponent<Animator>();
         mTransform = GetComponent<Transform>();
@@ -50,22 +61,36 @@ public class Entity : MonoBehaviour
     }
     protected void Move()
     {
+        if (mKeyDuck)
+        {
+            return;
+        }
         CalculateNewForce();
         mRigidbody.AddForce(mForce, ForceMode2D.Force);
     }
     protected void Jump()
     {
-        mRigidbody.AddForce(mJumpPower, ForceMode2D.Impulse);
+        if(mIsGrounded && mKeyJump)
+        {
+            mRigidbody.AddForce(mJumpPower, ForceMode2D.Impulse);
+        }
     }
     protected void Turn()
     {
         if(mDirection < 0)
         {
-            mSprite.flipX = false;
+            if(mSprite.flipX != false)
+            {
+                mSprite.flipX = false;
+            }
+            
         }
         else if (mDirection > 0)
         {
-            mSprite.flipX = true;
+            if (mSprite.flipX != true)
+            {
+                mSprite.flipX = true;
+            }
         }
     }
     public SpriteRenderer GetSpriteRenderer()
@@ -78,9 +103,9 @@ public class Entity : MonoBehaviour
     }
     protected void CheckIfGrounded()
     {
-        mIsGrounded = Physics2D.OverlapArea(new Vector2(transform.position.x - mCollider.bounds.size.x * 0.5f, transform.position.y * 0.5f),
-                                            new Vector2(transform.position.x + mCollider.bounds.size.x * 0.5f, (transform.position.y - mCollider.bounds.size.y) * 0.5f), 
-                                            groundLayer);
+        vectorPoint1 = new Vector2(transform.position.x - mSprite.bounds.size.x * 0.4f, transform.position.y);
+        vectorPoint2 = new Vector2(transform.position.x + mSprite.bounds.size.x * 0.4f, transform.position.y - (mSprite.bounds.size.y * 0.51f));
+        mIsGrounded = Physics2D.OverlapArea(vectorPoint1, vectorPoint2, groundLayer);
     }
     virtual protected void UpdateAnimations()
     {
@@ -88,10 +113,10 @@ public class Entity : MonoBehaviour
     }
 
 
-    //Debug
+    //Editor Debug
     private void OnDrawGizmos()
     {
-        //Gizmos.color = new Color(0,1,0, 0.5f);
-        //Gizmos.DrawCube(new Vector2(0f, vectorA.y + vectorB.y * 0.5f), new Vector2(vectorB.x - vectorA.x , vectorB.y - vectorA.y));
+        Gizmos.color = new Color(1,0,0, 0.5f);
+        Gizmos.DrawCube(new Vector2(transform.position.x, transform.position.y), new Vector2(vectorPoint2.x - vectorPoint1.x , vectorPoint2.y - vectorPoint1.y));
     }
 }

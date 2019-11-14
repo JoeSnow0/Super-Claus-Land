@@ -2,72 +2,109 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerEntity : Entity
 {
-    enum PowerUp {Small, Big, Fireflower}
-    
+    enum PowerUp { Small, Big, Fireflower }
+
+
     PowerUp mPowerUp;
-    private KeyboardInput playerInput;
+    [SerializeField] private KeyboardInput mplayerInput;
     private float mVelocityMax;
-    private bool mIsDucking;
+    
     protected override void Start()
     {
         mJumpPower.x = 0.0f;
         mJumpPower.y = 8.0f;
         mVelocityMax = mVelocity + 5.0f;
-        //playerInput = GetComponent<KeyboardInput>();
+        mplayerInput = mGameController.GetComponent<KeyboardInput>();
         mRigidbody = GetComponent<Rigidbody2D>();
+    }
+    private void FixedUpdate()
+    {
+        ClearInput();
+        GetInput();
+        GetDirection();
+        CheckIfGrounded();
+        Move();
+        Turn();
+        Jump();
     }
     protected override void Update()
     {
-        mDirection = GetDirection();
-        CheckIfGrounded();
         UpdateAnimations();
-        
-        if(mIsDucking == false)
-        {
-            Move();
-        }
-        
-        Turn();
-        if (Input.GetKey(KeyCode.DownArrow) && mIsGrounded == true)
-        {
-            Duck(true);
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            Duck(false);
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && mIsGrounded == true)
-        {
-            Jump();
-        }
-        
- 
     }
-    float GetDirection()
+    private void ClearInput()
+    {
+        mKeyDuck    = false;
+        mKeyJump    = false;
+        mKeyLeft    = false;
+        mKeyRight   = false;
+        mKeyRun     = false;
+    }
+    private void GetInput()
+    {
+        mKeyJump    = IsKeyPressed(mplayerInput.jumpKey);
+        mKeyDuck    = IsKeyHeld(mplayerInput.downKey);
+        mKeyLeft    = IsKeyHeld(mplayerInput.leftKey);
+        mKeyRight   = IsKeyHeld(mplayerInput.rightKey);
+    }
+    private bool IsKeyPressed(KeyCode key)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private bool IsKeyHeld(KeyCode key)
+    {
+        if (Input.GetKey(key))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private bool IsKeyReleased(KeyCode key)
+    {
+        if (Input.GetKeyUp(key))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    void GetDirection()
     {
         float inputDirection = 0.0f;
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (mKeyLeft)
         {
             inputDirection = -1f;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (mKeyRight)
         {
             inputDirection = 1f;
         }
-        return inputDirection;
+        mDirection = inputDirection;
     }
     private void Duck(bool state)
     {
-        mIsDucking = state;
+        mKeyDuck = state;
     }
     protected override void UpdateAnimations()
     {
         mAnimator.SetFloat("Direction", mDirection);
         mAnimator.SetFloat("Speed", Mathf.Abs(mForce.x));
         mAnimator.SetBool("Grounded", mIsGrounded);
-        mAnimator.SetBool("Down", mIsDucking);
+        mAnimator.SetBool("Down", mKeyDuck);
     }
     private void SetState(PowerUp powerUp)
     {

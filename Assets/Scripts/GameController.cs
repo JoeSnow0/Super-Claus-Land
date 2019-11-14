@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
     void CreatePlayer()
     {
         mPlayer = Instantiate(mPlayerPrefab, mStartPoint);
-        mPlayer.InitializeEntity();
+        mPlayer.InitializeEntity(this);
     }
 
 }
