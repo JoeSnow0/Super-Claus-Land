@@ -33,6 +33,7 @@ public class Entity : MonoBehaviour
         //
     protected bool mKeyDuck;
     protected bool mKeyJump;
+    protected bool mKeyJumpHeld;
     protected bool mKeyLeft;
     protected bool mKeyRight;
     protected bool mKeyRun;

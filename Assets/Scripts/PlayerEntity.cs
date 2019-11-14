@@ -9,7 +9,7 @@ public class PlayerEntity : Entity
 
 
     PowerUp mPowerUp;
-    [SerializeField] private KeyboardInput mplayerInput;
+    [SerializeField] private KeyboardInput mPlayerInput;
     private float mVelocityMax;
     
     protected override void Start()
@@ -17,7 +17,7 @@ public class PlayerEntity : Entity
         mJumpPower.x = 0.0f;
         mJumpPower.y = 8.0f;
         mVelocityMax = mVelocity + 5.0f;
-        mplayerInput = mGameController.GetComponent<KeyboardInput>();
+        mPlayerInput = mGameController.GetComponent<KeyboardInput>();
         mRigidbody = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
@@ -45,10 +45,11 @@ public class PlayerEntity : Entity
     }
     private void GetInput()
     {
-        mKeyJump    = IsKeyHeld(mplayerInput.jumpKey);
-        mKeyDuck    = IsKeyHeld(mplayerInput.downKey);
-        mKeyLeft    = IsKeyHeld(mplayerInput.leftKey);
-        mKeyRight   = IsKeyHeld(mplayerInput.rightKey);
+        mKeyJump = IsKeyPressed(mPlayerInput.jumpKey);
+        mKeyJumpHeld    = IsKeyHeld(mPlayerInput.jumpKey);
+        mKeyDuck    = IsKeyHeld(mPlayerInput.downKey);
+        mKeyLeft    = IsKeyHeld(mPlayerInput.leftKey);
+        mKeyRight   = IsKeyHeld(mPlayerInput.rightKey);
     }
     private bool IsKeyPressed(KeyCode key)
     {
@@ -116,11 +117,11 @@ public class PlayerEntity : Entity
     {
         if (mRigidbody.velocity.y < 0)
         {
-            mRigidbody.velocity = Vector2.up * Physics2D.gravity.y * (mFallMultiplier - 1.0f);
+            mRigidbody.velocity = new Vector2(mRigidbody.velocity.x, Vector2.up.y * Physics2D.gravity.y * (mFallMultiplier - 1.0f));
         }
-        else if (mRigidbody.velocity.y > 0 && !mKeyJump)
+        else if (mRigidbody.velocity.y > 0 && !mKeyJumpHeld)
         {
-            mRigidbody.velocity = Vector2.up * Physics2D.gravity.y * (mLowJumpMultiplier - 1.0f);
+            mRigidbody.velocity = new Vector2(mRigidbody.velocity.x, Vector2.up.y * Physics2D.gravity.y * (mLowJumpMultiplier - 1.0f));
         }
     }
 }
