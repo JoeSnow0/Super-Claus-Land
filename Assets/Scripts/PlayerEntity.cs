@@ -29,6 +29,7 @@ public class PlayerEntity : Entity
         Move();
         Turn();
         Jump();
+        VariableJumping();
     }
     protected override void Update()
     {
@@ -44,7 +45,7 @@ public class PlayerEntity : Entity
     }
     private void GetInput()
     {
-        mKeyJump    = IsKeyPressed(mplayerInput.jumpKey);
+        mKeyJump    = IsKeyHeld(mplayerInput.jumpKey);
         mKeyDuck    = IsKeyHeld(mplayerInput.downKey);
         mKeyLeft    = IsKeyHeld(mplayerInput.leftKey);
         mKeyRight   = IsKeyHeld(mplayerInput.rightKey);
@@ -109,5 +110,17 @@ public class PlayerEntity : Entity
     private void SetState(PowerUp powerUp)
     {
         mPowerUp = powerUp;
+    }
+
+    private void VariableJumping()
+    {
+        if (mRigidbody.velocity.y < 0)
+        {
+            mRigidbody.velocity = Vector2.up * Physics2D.gravity.y * (mFallMultiplier - 1.0f);
+        }
+        else if (mRigidbody.velocity.y > 0 && !mKeyJump)
+        {
+            mRigidbody.velocity = Vector2.up * Physics2D.gravity.y * (mLowJumpMultiplier - 1.0f);
+        }
     }
 }

@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour
     protected States mState;
     [Range(0.0f, 100.0f)]
     [SerializeField] protected float mVelocity;
-    protected Vector2 mJumpPower;
+    [SerializeField] protected Vector2 mJumpPower;
     protected Transform mTransform;
     protected Animator mAnimator;
     [SerializeField] protected bool mIsGrounded;
@@ -26,7 +26,11 @@ public class Entity : MonoBehaviour
     protected float mGravity = 0.0f;
     protected float mGravityDirection = -1.0f;
     protected Rigidbody2D mRigidbody;
-    
+    //Jumping and falling
+    protected float mFallMultiplier = 1.5f;
+    protected float mLowJumpMultiplier = 1.2f;
+
+        //
     protected bool mKeyDuck;
     protected bool mKeyJump;
     protected bool mKeyLeft;
@@ -55,9 +59,13 @@ public class Entity : MonoBehaviour
         mTransform = GetComponent<Transform>();
         mCollider = GetComponent<Collider2D>();
     }
-    private void CalculateNewForce()
+    private void CalculateNewMovementForce()
     {
         mForce.x = mVelocity * mDirection;
+    }
+    private void CalculateNewJumpForce()
+    {
+        mJumpPower.x = mVelocity * mDirection;
     }
     protected void Move()
     {
@@ -65,14 +73,14 @@ public class Entity : MonoBehaviour
         {
             return;
         }
-        CalculateNewForce();
-        mRigidbody.AddForce(mForce, ForceMode2D.Force);
+        CalculateNewMovementForce();
+        mRigidbody.AddRelativeForce(mForce, ForceMode2D.Force);
     }
     protected void Jump()
     {
         if(mIsGrounded && mKeyJump)
         {
-            mRigidbody.AddForce(mJumpPower, ForceMode2D.Impulse);
+            mRigidbody.AddRelativeForce(mJumpPower, ForceMode2D.Impulse);
         }
     }
     protected void Turn()
