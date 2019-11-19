@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mVelocity: 12
-  mJumpPower: {x: 0, y: 30}
+  mJumpPower: 12
   mIsGrounded: 0
   groundLayer:
     serializedVersion: 2

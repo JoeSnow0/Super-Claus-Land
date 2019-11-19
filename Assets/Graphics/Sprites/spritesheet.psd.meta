@@ -340,7 +340,7 @@ TextureImporter:
     second: Pipe_Straight_Extension
   - first:
       213: -6251682230944352461
-    second: spritesheet_1
+    second: Castle
   - first:
       213: 3343944759810340744
     second: Pipe_L-Shape
@@ -2036,7 +2036,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_1
+      name: Castle
       rect:
         serializedVersion: 2
         x: 6

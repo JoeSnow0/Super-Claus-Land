@@ -14,8 +14,7 @@ public class PlayerEntity : Entity
     
     protected override void Start()
     {
-        mJumpPower.x = 0.0f;
-        mJumpPower.y = 8.0f;
+        mJumpForce.y = mJumpPower;
         mVelocityMax = mVelocity + 5.0f;
         mPlayerInput = mGameController.GetComponent<KeyboardInput>();
         mRigidbody = GetComponent<Rigidbody2D>();

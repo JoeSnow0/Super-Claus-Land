@@ -11,9 +11,11 @@ public class Entity : MonoBehaviour
     protected enum States { Standing, Walking, Ducking, Jumping };
 
     protected States mState;
-    [Range(0.0f, 100.0f)]
+    [Header("Speed")]
+    [Range(0.0f, 30.0f)]
     [SerializeField] protected float mVelocity;
-    [SerializeField] protected Vector2 mJumpPower;
+    [Range(0.0f, 30.0f)]
+    [SerializeField] protected float mJumpPower;
     protected Transform mTransform;
     protected Animator mAnimator;
     [SerializeField] protected bool mIsGrounded;
@@ -21,6 +23,7 @@ public class Entity : MonoBehaviour
     protected Collider2D mCollider;
     protected GameObject mGameObject;
     protected Vector2 mForce;
+    protected Vector2 mJumpForce;
 
     protected float mDirection;
     protected float mGravity = 0.0f;
@@ -66,7 +69,7 @@ public class Entity : MonoBehaviour
     }
     private void CalculateNewJumpForce()
     {
-        mJumpPower.x = mVelocity * mDirection;
+        mJumpForce.y = mVelocity * mDirection;
     }
     protected void Move()
     {
@@ -81,7 +84,7 @@ public class Entity : MonoBehaviour
     {
         if(mIsGrounded && mKeyJump)
         {
-            mRigidbody.AddRelativeForce(mJumpPower, ForceMode2D.Impulse);
+            mRigidbody.AddRelativeForce(mJumpForce, ForceMode2D.Impulse);
         }
     }
     protected void Turn()
