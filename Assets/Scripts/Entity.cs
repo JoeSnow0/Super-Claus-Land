@@ -8,17 +8,21 @@ public class Entity : MonoBehaviour
     //Outside References
     protected GameController mGameController;
     //Speed & Direction
-    protected enum States { Standing, Walking, Ducking, Jumping };
+    //protected enum States { Standing, Walking, Ducking, Jumping };
 
-    protected States mState;
-    [Header("Speed")]
+    //protected States mState;
+
+    [Header("Editable")]
+    [Header("Run Speed")]
     [Range(0.0f, 30.0f)]
     [SerializeField] protected float mVelocity;
+    [Header("Jump Height")]
     [Range(0.0f, 30.0f)]
     [SerializeField] protected float mJumpPower;
+    [Header("Non-editable")]
+    [SerializeField] protected bool mIsGrounded;
     protected Transform mTransform;
     protected Animator mAnimator;
-    [SerializeField] protected bool mIsGrounded;
     protected SpriteRenderer mSprite;
     protected Collider2D mCollider;
     protected GameObject mGameObject;

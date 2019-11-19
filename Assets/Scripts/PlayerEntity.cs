@@ -7,15 +7,18 @@ public class PlayerEntity : Entity
 {
     enum PowerUp { Small, Big, Fireflower }
 
-
-    PowerUp mPowerUp;
-    [SerializeField] private KeyboardInput mPlayerInput;
+    [Header("Starting PowerUp")]
+    [SerializeField] PowerUp mSetPowerUp;
+    [Header("Current PowerUp")]
+    [SerializeField] PowerUp mCurrentPowerUp;
+    private KeyboardInput mPlayerInput;
     private float mVelocityMax;
     
     protected override void Start()
     {
         mJumpForce.y = mJumpPower;
         mVelocityMax = mVelocity + 5.0f;
+        mCurrentPowerUp = mSetPowerUp;
         mPlayerInput = mGameController.GetComponent<KeyboardInput>();
         mRigidbody = GetComponent<Rigidbody2D>();
     }
@@ -109,7 +112,7 @@ public class PlayerEntity : Entity
     }
     private void SetState(PowerUp powerUp)
     {
-        mPowerUp = powerUp;
+        mCurrentPowerUp = powerUp;
     }
 
     private void VariableJumping()

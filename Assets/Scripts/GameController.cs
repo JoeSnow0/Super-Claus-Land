@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
     void CreateCamera()
     {
         mCamera = Instantiate(mCameraPrefab, mStartPoint);
-        mCamera.InitializeCamera(this, mPlayer, mPlayer.GetSpriteRenderer().bounds);
+        mCamera.InitializeCamera(this, mPlayer);
     }
     void CreatePlayer()
     {
