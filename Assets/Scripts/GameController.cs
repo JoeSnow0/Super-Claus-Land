@@ -50,32 +50,30 @@ public class GameController : MonoBehaviour
     }
     private void UpdateEntityList()
     {
-        foreach(Entity entity0 in oldEntityList)
+        List<Entity> remainingEntities = new List<Entity>();
+        for (int i = entityList.Count - 1; i > -1; i--)
         {
-            foreach(Entity entity1 in entityList)
+            for (int j = 0; j < oldEntityList.Count; j++)
             {
-                if(entity0 == entity1)
-                {
-                    entityList.Remove(entity1);
+                if (i == j)
+                { 
+                    entityList.RemoveAt(i);
                 }
             }
         }
     }
     private void DeleteOldEntities()
     {
-        if(oldEntityList.Count != 0)
+        for (int i = oldEntityList.Count - 1; i > -1; i--)
         {
-            foreach (Entity entity in oldEntityList)
-            {
-                Destroy(entity.gameObject);
-            }
-            oldEntityList.Clear();
+            oldEntityList[i].DestroySelf();
+            oldEntityList.RemoveAt(i);
         }
     }
     void InitializeScene()
     {
         //CreatePlayer();
-        mPlayer = CreateEntity(mPlayerPrefab, gameObject.transform);
+        CreatePlayer();
         CreateCamera();
     }
     void CreateCamera()
@@ -88,11 +86,22 @@ public class GameController : MonoBehaviour
         mPlayer = Instantiate(mPlayerPrefab, mStartPoint);
         mPlayer.InitializeEntity(this);
     }
-    public Entity CreateEntity(Entity entityprefab, Transform transform)
+    
+    /// <summary>
+    /// Creates a new entity, adds it to the new entity list and initializes it.     
+    /// </summary>
+    /// <param name="entityprefab"></param>
+    /// <param name="transform"></param>
+    /// <returns></returns>
+    public void CreateEntity(Entity entityprefab, Transform transform)
     {
         Entity newEntity = Instantiate(entityprefab, transform);
         newEntity.InitializeEntity(this);
         AddEntity(newEntity);
-        return newEntity;
+    }
+
+    public Entity GetPlayerEntity()
+    {
+        return mPlayer;
     }
 }
