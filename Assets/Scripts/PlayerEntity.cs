@@ -9,23 +9,17 @@ public class PlayerEntity : Entity
 
     [Header("Starting PowerUp")]
     [SerializeField] PowerUp mSetPowerUp;
-    [Header("Current PowerUp")]
-    [SerializeField] PowerUp mCurrentPowerUp;
+    PowerUp mCurrentPowerUp;
     private KeyboardInput mPlayerInput;
-    private float mVelocityMax;
     
     protected override void Start()
     {
         mJumpForce.y = mJumpPower;
-        mVelocityMax = mVelocity + 5.0f;
         mCurrentPowerUp = mSetPowerUp;
         mPlayerInput = mGameController.GetComponent<KeyboardInput>();
-        mRigidbody = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
     {
-        ClearInput();
-        GetInput();
         GetDirection();
         CheckIfGrounded();
         Move();
@@ -35,23 +29,26 @@ public class PlayerEntity : Entity
     }
     protected override void Update()
     {
+        ClearInput();
+        GetInput();
         UpdateAnimations();
     }
     private void ClearInput()
     {
         mKeyDuck    = false;
         mKeyJump    = false;
+        mKeyJumpHeld = false;
         mKeyLeft    = false;
         mKeyRight   = false;
         mKeyRun     = false;
     }
     private void GetInput()
     {
-        mKeyJump = IsKeyPressed(mPlayerInput.jumpKey);
+        mKeyJump        = IsKeyPressed(mPlayerInput.jumpKey);
         mKeyJumpHeld    = IsKeyHeld(mPlayerInput.jumpKey);
-        mKeyDuck    = IsKeyHeld(mPlayerInput.downKey);
-        mKeyLeft    = IsKeyHeld(mPlayerInput.leftKey);
-        mKeyRight   = IsKeyHeld(mPlayerInput.rightKey);
+        mKeyDuck        = IsKeyHeld(mPlayerInput.downKey);
+        mKeyLeft        = IsKeyHeld(mPlayerInput.leftKey);
+        mKeyRight       = IsKeyHeld(mPlayerInput.rightKey);
     }
     private bool IsKeyPressed(KeyCode key)
     {
@@ -107,6 +104,7 @@ public class PlayerEntity : Entity
     {
         mAnimator.SetFloat("Direction", mDirection);
         mAnimator.SetFloat("Speed", Mathf.Abs(mForce.x));
+        mAnimator.SetFloat("Velocity", mRigidbody.velocity.x);
         mAnimator.SetBool("Grounded", mIsGrounded);
         mAnimator.SetBool("Down", mKeyDuck);
     }

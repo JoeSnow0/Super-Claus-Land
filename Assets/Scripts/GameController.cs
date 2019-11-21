@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform mStartPoint;
     private Entity mPlayer;
     private CameraFollow mCamera;
+    private List<Entity> entityList = new List<Entity>();
+    private List<Entity> oldEntityList = new List<Entity>();
+    private List<Entity> newEntityList = new List<Entity>();
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +23,59 @@ public class GameController : MonoBehaviour
     {
         mCamera.CheckIfTargetInSight();
     }
+    private void LateUpdate()
+    {
+        AddNewEntities();
+        UpdateEntityList();
+        DeleteOldEntities();
+    }
+    public void AddEntity(Entity newEntity)
+    {
+        newEntityList.Add(newEntity);
+    }
+    public void RemoveEntity(Entity oldEntity)
+    {
+        oldEntityList.Add(oldEntity);
+    }
+    private void AddNewEntities()
+    {
+        if(newEntityList.Count != 0)
+        {
+            for (int i = 0; i < newEntityList.Count; i++)
+            {
+                entityList.Add(newEntityList[i]);
+            }
+            newEntityList.Clear();
+        }
+    }
+    private void UpdateEntityList()
+    {
+        foreach(Entity entity0 in oldEntityList)
+        {
+            foreach(Entity entity1 in entityList)
+            {
+                if(entity0 == entity1)
+                {
+                    entityList.Remove(entity1);
+                }
+            }
+        }
+    }
+    private void DeleteOldEntities()
+    {
+        if(oldEntityList.Count != 0)
+        {
+            foreach (Entity entity in oldEntityList)
+            {
+                Destroy(entity.gameObject);
+            }
+            oldEntityList.Clear();
+        }
+    }
     void InitializeScene()
     {
-        CreatePlayer();
+        //CreatePlayer();
+        mPlayer = CreateEntity(mPlayerPrefab, gameObject.transform);
         CreateCamera();
     }
     void CreateCamera()
@@ -35,5 +88,11 @@ public class GameController : MonoBehaviour
         mPlayer = Instantiate(mPlayerPrefab, mStartPoint);
         mPlayer.InitializeEntity(this);
     }
-
+    public Entity CreateEntity(Entity entityprefab, Transform transform)
+    {
+        Entity newEntity = Instantiate(entityprefab, transform);
+        newEntity.InitializeEntity(this);
+        AddEntity(newEntity);
+        return newEntity;
+    }
 }

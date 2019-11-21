@@ -13,9 +13,15 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float mCameraSpeed;
     //Camera Offset
     [Header("Camera Offset")]
-    [SerializeField] private float zOffset;
-    [SerializeField] private float yOffset;
+    [SerializeField] private float zOffset = 10;
+    [SerializeField] private float yOffset = 6;
 
+    Camera mCamera;
+    int mHorizontalBounds;
+    private void Start()
+    {
+        
+    }
     private void Update()
     {
         

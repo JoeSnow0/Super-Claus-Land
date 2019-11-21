@@ -12,32 +12,33 @@ public class Entity : MonoBehaviour
 
     //protected States mState;
 
-    [Header("Editable")]
+   
     [Header("Run Speed")]
     [Range(0.0f, 30.0f)]
     [SerializeField] protected float mVelocity;
     [Header("Jump Height")]
     [Range(0.0f, 30.0f)]
     [SerializeField] protected float mJumpPower;
-    [Header("Non-editable")]
     [SerializeField] protected bool mIsGrounded;
+    
+    //Component References
     protected Transform mTransform;
     protected Animator mAnimator;
     protected SpriteRenderer mSprite;
     protected Collider2D mCollider;
     protected GameObject mGameObject;
-    protected Vector2 mForce;
-    protected Vector2 mJumpForce;
-
-    protected float mDirection;
-    protected float mGravity = 0.0f;
-    protected float mGravityDirection = -1.0f;
     protected Rigidbody2D mRigidbody;
+
+    //Movement
+    protected Vector2 mForce = Vector2.zero;
+    protected float mDirection;
+
     //Jumping and falling
+    protected Vector2 mJumpForce;
     protected float mFallMultiplier = 1.5f;
     protected float mLowJumpMultiplier = 1.2f;
 
-        //
+    //Keybindings
     protected bool mKeyDuck;
     protected bool mKeyJump;
     protected bool mKeyJumpHeld;
@@ -45,8 +46,10 @@ public class Entity : MonoBehaviour
     protected bool mKeyRight;
     protected bool mKeyRun;
 
-    Vector2 vectorPoint1;
-    Vector2 vectorPoint2;
+    private Vector2 vectorPoint1;
+    private Vector2 vectorPoint2;
+    [Header("Ground")]
+    [Tooltip("Anything considered ground should have this layer attached.")]
     [SerializeField] protected LayerMask groundLayer;
 
     protected Vector2Int mPos;
@@ -66,14 +69,12 @@ public class Entity : MonoBehaviour
         mAnimator = GetComponent<Animator>();
         mTransform = GetComponent<Transform>();
         mCollider = GetComponent<Collider2D>();
+        mGameObject = GetComponent<GameObject>();
+        mRigidbody = GetComponent<Rigidbody2D>();
     }
     private void CalculateNewMovementForce()
     {
         mForce.x = mVelocity * mDirection;
-    }
-    private void CalculateNewJumpForce()
-    {
-        mJumpForce.y = mVelocity * mDirection;
     }
     protected void Move()
     {
@@ -116,6 +117,10 @@ public class Entity : MonoBehaviour
     public Transform GetTransform()
     {
         return mTransform;
+    }
+    public Rigidbody2D GetRigidbody()
+    {
+        return mRigidbody;
     }
     protected void CheckIfGrounded()
     {

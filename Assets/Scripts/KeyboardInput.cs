@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class KeyboardInput : MonoBehaviour
 {
     public KeyCode jumpKey  = KeyCode.Space;
