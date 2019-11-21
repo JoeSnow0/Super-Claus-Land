@@ -12,14 +12,6 @@ public class Entity : MonoBehaviour
 
     //protected States mState;
 
-   
-    [Header("Run Speed")]
-    [Range(0.0f, 30.0f)]
-    [SerializeField] protected float mVelocity;
-    [Header("Jump Height")]
-    [Range(0.0f, 30.0f)]
-    [SerializeField] protected float mJumpPower;
-    [SerializeField] protected bool mIsGrounded;
     
     //Component References
     protected Transform mTransform;
@@ -30,27 +22,37 @@ public class Entity : MonoBehaviour
     protected Rigidbody2D mRigidbody;
 
     //Movement
+    [Header("Run Speed")]
+    [Range(0.0f, 30.0f)]
+    [SerializeField] protected float mVelocity;
+    [SerializeField]protected float mDirection;
     protected Vector2 mForce = Vector2.zero;
-    protected float mDirection;
 
     //Jumping and falling
+    [Header("Jump Height")]
+    [Range(0.0f, 30.0f)]
+    [SerializeField] protected float mJumpPower;
     protected Vector2 mJumpForce;
     protected float mFallMultiplier = 1.5f;
     protected float mLowJumpMultiplier = 1.2f;
 
-    //Keybindings
+    //Ground Checking
+    private Vector2 vectorPoint1;
+    private Vector2 vectorPoint2;
+    [SerializeField] protected bool mIsGrounded;
+    [Header("Ground")]
+    [Tooltip("Anything considered ground should have this layer attached.")]
+    [SerializeField] protected LayerMask groundLayer;
+
+    //Keybindings //NEED TO MOVE TO PLAYER ENTITY SOMEHOW or does it?
     protected bool mKeyDuck;
     protected bool mKeyJump;
     protected bool mKeyJumpHeld;
     protected bool mKeyLeft;
     protected bool mKeyRight;
     protected bool mKeyRun;
-
-    private Vector2 vectorPoint1;
-    private Vector2 vectorPoint2;
-    [Header("Ground")]
-    [Tooltip("Anything considered ground should have this layer attached.")]
-    [SerializeField] protected LayerMask groundLayer;
+    
+    
 
     protected Vector2Int mPos;
 
@@ -139,5 +141,9 @@ public class Entity : MonoBehaviour
     {
         Gizmos.color = new Color(1,0,0, 0.5f);
         Gizmos.DrawCube(new Vector2(transform.position.x, transform.position.y), new Vector2(vectorPoint2.x - vectorPoint1.x , vectorPoint2.y - vectorPoint1.y));
+    }
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
     }
 }

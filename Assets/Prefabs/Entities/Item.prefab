@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71ac3ca8dc03e34fa7c7986308878a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mVelocity: 9
-  mJumpPower: 0
+  mVelocity: 1
+  mJumpPower: 1
   mIsGrounded: 0
   groundLayer:
     serializedVersion: 2
@@ -149,4 +149,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

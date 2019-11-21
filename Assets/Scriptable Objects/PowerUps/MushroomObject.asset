@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781d0d8056d0f9543ab30545e5d6775d, type: 3}
   m_Name: MushroomObject
   m_EditorClassIdentifier: 
-  mName: Mushroom
   mSprite: {fileID: -4398394707965095008, guid: a83168850d09f6c4eb928841edc927b1,
     type: 3}
-  mCollider: {fileID: 0}
+  mAnimation: {fileID: 0}
   mMoves: 1
-  mJumps: 0
-  mDirection: 0
+  mSpeed: 2
+  mJumps: 1
+  mJumpPower: 1
