@@ -127,7 +127,7 @@ public class Entity : MonoBehaviour
     protected void CheckIfGrounded()
     {
         vectorPoint1 = new Vector2(transform.position.x - mSprite.bounds.size.x * 0.4f, transform.position.y - (mSprite.bounds.size.y * 0.4f));
-        vectorPoint2 = new Vector2(transform.position.x + mSprite.bounds.size.x * 0.4f, transform.position.y - (mSprite.bounds.size.y * 0.51f));
+        vectorPoint2 = new Vector2(transform.position.x + mSprite.bounds.size.x * 0.4f, transform.position.y - (mSprite.bounds.size.y * 0.55f));
         mIsGrounded = Physics2D.OverlapArea(vectorPoint1, vectorPoint2, groundLayer);
     }
     virtual protected void UpdateAnimations()

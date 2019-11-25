@@ -72,6 +72,13 @@ public class GameController : MonoBehaviour
     }
     void InitializeScene()
     {
+        Entity[] entitiesInScene = FindObjectsOfType<Entity>();
+        foreach (Entity entity in entitiesInScene)
+        {
+            AddEntity(entity);
+            entity.InitializeEntity(this);
+        }
+        
         //CreatePlayer();
         CreatePlayer();
         CreateCamera();
