@@ -45,7 +45,7 @@ public class ItemEntity : Entity
         }
         if(mItem.mJumps)
         {
-            mJumpPower = mItem.mJumpPower;
+            mRigidbody.AddRelativeForce(new Vector2(0f,mItem.mJumpPower), ForceMode2D.Force);
         }
         setMarioState = mItem.setState;
     }

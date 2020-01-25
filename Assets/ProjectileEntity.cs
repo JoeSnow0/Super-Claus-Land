@@ -5,18 +5,18 @@ using UnityEngine;
 public class ProjectileEntity : MonoBehaviour
 {
     private float mDirection = 0f;
-    [SerializeField] private float mSpeed = 500f;
+    [SerializeField] private float mSpeed = 10f;
     private Rigidbody2D rigidbody;
     private int maxBounce = 5;
     private int currentBounce = 0;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = new Vector2(mDirection * mSpeed * Time.deltaTime, rigidbody.velocity.y);
     }
-    public void initializeProjectile(float direction, float speed)
+    public void initializeProjectile(float direction)
     {
         mDirection = direction;
-        mSpeed = mSpeed + speed;
 
         print("direction: " + mDirection);
         print("Speed: " + mSpeed);
@@ -24,14 +24,25 @@ public class ProjectileEntity : MonoBehaviour
     }
     private void Update()
     {
-        rigidbody.velocity = new Vector2(mDirection * mSpeed * Time.deltaTime, rigidbody.velocity.y);
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         currentBounce += 1;
         if(currentBounce >= maxBounce)
         {
-            Destroy(gameObject);
+            Death();
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            Death();
+        }
+    }
+    void Death()
+    {
+        Destroy(gameObject);
     }
 }

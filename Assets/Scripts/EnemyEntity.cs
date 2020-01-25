@@ -62,7 +62,7 @@ public class EnemyEntity : Entity
         if (collision.gameObject.tag == "Player")
         {
             PlayerEntity player = collision.gameObject.GetComponent<PlayerEntity>();
-            print(player.GetRigidbody().velocity.y);
+            
             //If falling
             if (player.GetRigidbody().velocity.y < 0)
             {
@@ -80,8 +80,20 @@ public class EnemyEntity : Entity
     void Death()
     {
         isDead = true;
-        mRigidbody.sleepMode = RigidbodySleepMode2D.StartAsleep;
+        mRigidbody.gravityScale = 0;
+        GetComponent<Collider2D>().enabled = false;
+
         mDirection = 0f;
         Destroy(gameObject, 1f);
     }
+    //void InRangeOfCamera()
+    //{
+    //    float minDistance = mGameController.mCameraPrefab.transform.position.x + mGameController.mCameraPrefab.GetComponent<Camera>().pixelWidth * 0.5f;
+    //    float distance = Vector3.Distance(transform.position, mGameController.mCameraPrefab.transform.position);
+
+    //    if(minDistance > distance)
+    //    {
+    //        mRigidbody.WakeUp();
+    //    }
+    //}
 }

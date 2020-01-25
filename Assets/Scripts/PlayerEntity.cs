@@ -14,6 +14,8 @@ public class PlayerEntity : Entity
     private KeyboardInput mPlayerInput;
     [SerializeField] private ProjectileEntity mFireballPrefab;
     float mPreviousDirection = 1f;
+    float iFrameSeconds = 2f;
+    bool isInvincible = false;
     protected override void Start()
     {
         mJumpForce.y = mJumpPower;
@@ -160,27 +162,38 @@ public class PlayerEntity : Entity
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CollisionWithEnemy(collision);
+        
+        CollisionWithEnemy(collision.gameObject);
         CollisionWithItem(collision);
+        
     }
-    private void CollisionWithEnemy(Collision2D collision)
+    private void CollisionWithEnemy(GameObject collisionTarget)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collisionTarget.tag == "Enemy")
         {
-            EnemyEntity enemy = collision.gameObject.GetComponent<EnemyEntity>();
-            if (!enemy.isDead && GetState() != playerState.Dead)
+            EnemyEntity enemy = collisionTarget.GetComponent<EnemyEntity>();
+            if (!enemy.isDead && GetState() != playerState.Dead && mRigidbody.velocity.y >= 0)
             {
-                if ((int)GetState() > (int)playerState.Small)
+                if ((int)GetState() > (int)playerState.Small && !isInvincible)
                 {
                     SetState(playerState.Small);
+                    StartCoroutine(invincibility(iFrameSeconds));
                 }
-                else if((int)GetState() == (int)playerState.Small)
+                else if ((int)GetState() == (int)playerState.Small && !isInvincible)
                 {
-                    SetState(playerState.Dead);
+                    Death();
                 }
             }
         }
     }
+
+    void Death()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+        SetState(playerState.Dead);
+        gameObject.SetActive(false);
+    }
+
     private void CollisionWithItem(Collision2D collision)
     {
         if (collision.gameObject.tag == "Friendly")
@@ -197,13 +210,10 @@ public class PlayerEntity : Entity
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        CollisionWithEnemy(collision.gameObject);
+        if (collision.gameObject.tag == "InstantDeath")
         {
-            EnemyEntity enemy = collision.gameObject.GetComponent<EnemyEntity>();
-            if (!enemy.isDead && mRigidbody.velocity.y >= 0)
-            {
-                Destroy(gameObject);
-            }
+            Death();
         }
     }
     void Shooting()
@@ -213,7 +223,16 @@ public class PlayerEntity : Entity
         ProjectileEntity newProjectile = Instantiate(mFireballPrefab, transform);
         newProjectile.transform.position = new Vector3(transform.position.x + mPreviousDirection * mSpriteRenderer.size.x * 0.5f, transform.position.y, transform.position.z);
         newProjectile.transform.SetParent(null);
-        newProjectile.initializeProjectile(mPreviousDirection, mRigidbody.velocity.x);
+        newProjectile.initializeProjectile(mPreviousDirection);
 
+    }
+    private IEnumerator invincibility(float time)
+    {
+        
+        isInvincible = true;
+        print("Invincible: " + isInvincible);
+        yield return new WaitForSeconds(time);
+        isInvincible = false;
+        print("Invincible: " + isInvincible);
     }
 }
