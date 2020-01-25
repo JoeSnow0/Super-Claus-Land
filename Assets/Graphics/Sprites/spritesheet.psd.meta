@@ -46,7 +46,7 @@ TextureImporter:
     second: Mario_Big_Stand
   - first:
       213: 6985626698306143173
-    second: spritesheet_14
+    second: Mario_Small_Death
   - first:
       213: 4773514653529381359
     second: spritesheet_15
@@ -64,28 +64,28 @@ TextureImporter:
     second: spritesheet_19
   - first:
       213: -2642393358525368334
-    second: spritesheet_20
+    second: Mario_Small_Duck
   - first:
       213: 182515998739034355
     second: spritesheet_21
   - first:
       213: 5390129371266227295
-    second: spritesheet_22
+    second: Mario_Small_Jump
   - first:
       213: 1111231892956182058
-    second: spritesheet_23
+    second: Mario_Small_Turn
   - first:
       213: 3042023047814558122
-    second: spritesheet_24
+    second: Mario_Small_Run_2
   - first:
       213: -1297572194080285004
-    second: spritesheet_25
+    second: Mario_Small_Run_1
   - first:
       213: -5351138903708955224
-    second: spritesheet_26
+    second: Mario_Small_Run_0
   - first:
       213: -5895191231709818157
-    second: spritesheet_27
+    second: Mario_Small_Stand
   - first:
       213: 4116411608050698257
     second: spritesheet_28
@@ -112,25 +112,25 @@ TextureImporter:
     second: spritesheet_35
   - first:
       213: -2800876817223335725
-    second: spritesheet_36
+    second: Mario_FireFlower_Jump
   - first:
       213: 7686511047796825374
-    second: spritesheet_37
+    second: Mario_FireFlower_Turn
   - first:
       213: -3654083477062011090
-    second: spritesheet_38
+    second: Mario_FireFlower_Run_2
   - first:
       213: -2213891765562235112
-    second: spritesheet_39
+    second: Mario_FireFlower_Run_1
   - first:
       213: 7816579671404485219
-    second: spritesheet_40
+    second: Mario_FireFlower_Run_0
   - first:
       213: 8434893452232278025
-    second: spritesheet_41
+    second: Mario_FireFlower_Duck
   - first:
       213: 3062383759408700104
-    second: spritesheet_42
+    second: Mario_FireFlower_Stand
   - first:
       213: -3687489427716195
     second: spritesheet_43
@@ -151,16 +151,16 @@ TextureImporter:
     second: spritesheet_48
   - first:
       213: -9123048126347468465
-    second: spritesheet_49
+    second: Koopa_Idle
   - first:
       213: -2731854774048942697
-    second: spritesheet_50
+    second: Koopa_Transition_to_Walk
   - first:
       213: 6463828295129595045
-    second: spritesheet_51
+    second: Koopa_Walk_0
   - first:
       213: 2920052613717862253
-    second: spritesheet_52
+    second: Koopa_Walk_1
   - first:
       213: -8873626391699258573
     second: spritesheet_53
@@ -208,7 +208,7 @@ TextureImporter:
     second: Coin_1
   - first:
       213: 5476210624315791439
-    second: Coin_2
+    second: Projectile
   - first:
       213: 4881338712816961750
     second: FireFlower_0
@@ -344,6 +344,12 @@ TextureImporter:
   - first:
       213: 3343944759810340744
     second: Pipe_L-Shape
+  - first:
+      213: -328824819827153993
+    second: Goomba_Idle
+  - first:
+      213: -2652133911391862278
+    second: Coin_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -734,13 +740,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_14
+      name: Mario_Small_Death
       rect:
         serializedVersion: 2
         x: 0
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -761,7 +767,7 @@ TextureImporter:
         x: 18
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -782,7 +788,7 @@ TextureImporter:
         x: 36
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -860,13 +866,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_20
+      name: Mario_Small_Duck
       rect:
         serializedVersion: 2
         x: 108
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -887,7 +893,7 @@ TextureImporter:
         x: 126
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -902,13 +908,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_22
+      name: Mario_Small_Jump
       rect:
         serializedVersion: 2
         x: 144
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -923,13 +929,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_23
+      name: Mario_Small_Turn
       rect:
         serializedVersion: 2
         x: 162
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -944,13 +950,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_24
+      name: Mario_Small_Run_2
       rect:
         serializedVersion: 2
         x: 180
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -965,13 +971,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_25
+      name: Mario_Small_Run_1
       rect:
         serializedVersion: 2
         x: 198
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -986,13 +992,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_26
+      name: Mario_Small_Run_0
       rect:
         serializedVersion: 2
         x: 216
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1007,13 +1013,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_27
+      name: Mario_Small_Stand
       rect:
         serializedVersion: 2
         x: 234
         y: 335
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1034,7 +1040,7 @@ TextureImporter:
         x: 252
         y: 335
         width: 16
-        height: 24
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1196,7 +1202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_36
+      name: Mario_FireFlower_Jump
       rect:
         serializedVersion: 2
         x: 126
@@ -1217,7 +1223,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_37
+      name: Mario_FireFlower_Turn
       rect:
         serializedVersion: 2
         x: 144
@@ -1238,7 +1244,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_38
+      name: Mario_FireFlower_Run_2
       rect:
         serializedVersion: 2
         x: 162
@@ -1259,7 +1265,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_39
+      name: Mario_FireFlower_Run_1
       rect:
         serializedVersion: 2
         x: 180
@@ -1280,7 +1286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_40
+      name: Mario_FireFlower_Run_0
       rect:
         serializedVersion: 2
         x: 198
@@ -1301,7 +1307,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_41
+      name: Mario_FireFlower_Duck
       rect:
         serializedVersion: 2
         x: 216
@@ -1322,7 +1328,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_42
+      name: Mario_FireFlower_Stand
       rect:
         serializedVersion: 2
         x: 234
@@ -1406,7 +1412,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_49
+      name: Koopa_Idle
       rect:
         serializedVersion: 2
         x: 0
@@ -1427,7 +1433,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_50
+      name: Koopa_Transition_to_Walk
       rect:
         serializedVersion: 2
         x: 18
@@ -1448,7 +1454,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_51
+      name: Koopa_Walk_0
       rect:
         serializedVersion: 2
         x: 36
@@ -1469,7 +1475,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_52
+      name: Koopa_Walk_1
       rect:
         serializedVersion: 2
         x: 54
@@ -1763,13 +1769,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin_2
+      name: Projectile
       rect:
         serializedVersion: 2
-        x: 180
-        y: 164
-        width: 16
-        height: 16
+        x: 185
+        y: 170
+        width: 4
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2073,6 +2079,48 @@ TextureImporter:
       bones: []
       spriteID: 9d696f427713626428a195acce3fad78
       internalID: 3343944759810340744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goomba_Idle
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 267
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33341e420fdf6af4f9c1442bf7132487
+      internalID: -328824819827153993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coin_2
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 164
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0d936e83df2f614b9a9168796d22104
+      internalID: -2652133911391862278
       vertices: []
       indices: 
       edges: []

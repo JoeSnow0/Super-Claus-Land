@@ -16,7 +16,7 @@ public class Entity : MonoBehaviour
     //Component References
     protected Transform mTransform;
     protected Animator mAnimator;
-    protected SpriteRenderer mSprite;
+    protected SpriteRenderer mSpriteRenderer;
     protected Collider2D mCollider;
     protected GameObject mGameObject;
     protected Rigidbody2D mRigidbody;
@@ -25,8 +25,8 @@ public class Entity : MonoBehaviour
     [Header("Run Speed")]
     [Range(0.0f, 30.0f)]
     [SerializeField] protected float mVelocity;
-    [SerializeField]protected float mDirection;
-    protected Vector2 mForce = Vector2.zero;
+    [SerializeField] protected float mDirection;
+    public Vector2 mForce = Vector2.zero;
 
     //Jumping and falling
     [Header("Jump Height")]
@@ -44,6 +44,9 @@ public class Entity : MonoBehaviour
     [Tooltip("Anything considered ground should have this layer attached.")]
     [SerializeField] protected LayerMask groundLayer;
 
+    //Life
+    public bool isDead = false;
+
     //Keybindings //NEED TO MOVE TO PLAYER ENTITY SOMEHOW or does it?
     protected bool mKeyDuck;
     protected bool mKeyJump;
@@ -51,14 +54,15 @@ public class Entity : MonoBehaviour
     protected bool mKeyLeft;
     protected bool mKeyRight;
     protected bool mKeyRun;
-    
-    
+    protected bool mKeyShoot;
+
+
 
     protected Vector2Int mPos;
 
     virtual protected void Start()
     {
-       
+        
     }
     virtual protected void Update()
     {
@@ -67,7 +71,7 @@ public class Entity : MonoBehaviour
     public void InitializeEntity(GameController controller)
     {
         mGameController = controller;
-        mSprite = GetComponent<SpriteRenderer>();
+        mSpriteRenderer = GetComponent<SpriteRenderer>();
         mAnimator = GetComponent<Animator>();
         mTransform = GetComponent<Transform>();
         mCollider = GetComponent<Collider2D>();
@@ -85,7 +89,7 @@ public class Entity : MonoBehaviour
             return;
         }
         CalculateNewMovementForce();
-        mRigidbody.AddRelativeForce(mForce, ForceMode2D.Force);
+        mRigidbody.velocity = new Vector2(mForce.x, mRigidbody.velocity.y);
     }
     protected void Jump()
     {
@@ -98,23 +102,23 @@ public class Entity : MonoBehaviour
     {
         if(mDirection < 0)
         {
-            if(mSprite.flipX != false)
+            if(mSpriteRenderer.flipX != false)
             {
-                mSprite.flipX = false;
+                mSpriteRenderer.flipX = false;
             }
             
         }
         else if (mDirection > 0)
         {
-            if (mSprite.flipX != true)
+            if (mSpriteRenderer.flipX != true)
             {
-                mSprite.flipX = true;
+                mSpriteRenderer.flipX = true;
             }
         }
     }
     public SpriteRenderer GetSpriteRenderer()
     {
-        return mSprite;
+        return mSpriteRenderer;
     }
     public Transform GetTransform()
     {
@@ -126,8 +130,8 @@ public class Entity : MonoBehaviour
     }
     protected void CheckIfGrounded()
     {
-        vectorPoint1 = new Vector2(transform.position.x - mSprite.bounds.size.x * 0.4f, transform.position.y - (mSprite.bounds.size.y * 0.4f));
-        vectorPoint2 = new Vector2(transform.position.x + mSprite.bounds.size.x * 0.4f, transform.position.y - (mSprite.bounds.size.y * 0.55f));
+        vectorPoint1 = new Vector2(transform.position.x - mSpriteRenderer.bounds.size.x * 0.4f, transform.position.y - (mSpriteRenderer.bounds.size.y * 0.4f));
+        vectorPoint2 = new Vector2(transform.position.x + mSpriteRenderer.bounds.size.x * 0.4f, transform.position.y - (mSpriteRenderer.bounds.size.y * 0.55f));
         mIsGrounded = Physics2D.OverlapArea(vectorPoint1, vectorPoint2, groundLayer);
     }
     virtual protected void UpdateAnimations()
@@ -144,6 +148,6 @@ public class Entity : MonoBehaviour
     }
     public void DestroySelf()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

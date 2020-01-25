@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class PlayerEntity : Entity
 {
-    enum PowerUp { Small, Big, Fireflower }
+    public enum playerState { Small, Big, Fireflower, Dead }
 
     [Header("Starting PowerUp")]
-    [SerializeField] PowerUp mSetPowerUp;
-    PowerUp mCurrentPowerUp;
+    [SerializeField] playerState mSetInitialState;
+    [SerializeField] playerState mCurrentState;
+    playerState mPreviousState;
     private KeyboardInput mPlayerInput;
-    
+    [SerializeField] private ProjectileEntity mFireballPrefab;
+    float mPreviousDirection = 1f;
     protected override void Start()
     {
         mJumpForce.y = mJumpPower;
-        mCurrentPowerUp = mSetPowerUp;
+        SetState(mSetInitialState);
         mPlayerInput = mGameController.GetComponent<KeyboardInput>();
     }
     private void FixedUpdate()
@@ -32,6 +34,7 @@ public class PlayerEntity : Entity
         ClearInput();
         GetInput();
         UpdateAnimations();
+        Shooting();
     }
     private void ClearInput()
     {
@@ -45,6 +48,7 @@ public class PlayerEntity : Entity
     private void GetInput()
     {
         mKeyJump        = IsKeyPressed(mPlayerInput.jumpKey);
+        mKeyShoot       = IsKeyPressed(mPlayerInput.shootKey);
         mKeyJumpHeld    = IsKeyHeld(mPlayerInput.jumpKey);
         mKeyDuck        = IsKeyHeld(mPlayerInput.downKey);
         mKeyLeft        = IsKeyHeld(mPlayerInput.leftKey);
@@ -85,7 +89,7 @@ public class PlayerEntity : Entity
     }
     void GetDirection()
     {
-        float inputDirection = 0.0f;
+        float inputDirection = 0f;
         if (mKeyLeft)
         {
             inputDirection = -1f;
@@ -95,6 +99,10 @@ public class PlayerEntity : Entity
             inputDirection = 1f;
         }
         mDirection = inputDirection;
+        if (mDirection != 0f)
+        {
+            mPreviousDirection = mDirection;
+        }
     }
     private void Duck(bool state)
     {
@@ -107,10 +115,36 @@ public class PlayerEntity : Entity
         mAnimator.SetFloat("Velocity", mRigidbody.velocity.x);
         mAnimator.SetBool("Grounded", mIsGrounded);
         mAnimator.SetBool("Down", mKeyDuck);
+        
+
     }
-    private void SetState(PowerUp powerUp)
+    private void SetState(playerState newState)
     {
-        mCurrentPowerUp = powerUp;
+        mPreviousState = mCurrentState;
+        mCurrentState = newState;
+        if (mCurrentState == playerState.Fireflower)
+        {
+            mAnimator.SetBool("FireFlower", true);
+        }
+        
+        else if (mCurrentState == playerState.Big)
+        {
+            mAnimator.SetBool("Big", true);
+        }
+        else if (mCurrentState == playerState.Small)
+        {
+            mAnimator.SetBool("Small", true);
+        }
+    }
+    private void LateUpdate()
+    {
+        mAnimator.SetBool("Small", false);
+        mAnimator.SetBool("Big", false);
+        mAnimator.SetBool("FireFlower", false);
+    }
+    private playerState GetState()
+    {
+        return mCurrentState;
     }
 
     private void VariableJumping()
@@ -123,5 +157,63 @@ public class PlayerEntity : Entity
         {
             mRigidbody.velocity = new Vector2(mRigidbody.velocity.x, Vector2.up.y * Physics2D.gravity.y * (mLowJumpMultiplier - 1.0f));
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        CollisionWithEnemy(collision);
+        CollisionWithItem(collision);
+    }
+    private void CollisionWithEnemy(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            EnemyEntity enemy = collision.gameObject.GetComponent<EnemyEntity>();
+            if (!enemy.isDead && GetState() != playerState.Dead)
+            {
+                if ((int)GetState() > (int)playerState.Small)
+                {
+                    SetState(playerState.Small);
+                }
+                else if((int)GetState() == (int)playerState.Small)
+                {
+                    SetState(playerState.Dead);
+                }
+            }
+        }
+    }
+    private void CollisionWithItem(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Friendly")
+        {
+            ItemEntity item = collision.gameObject.GetComponent<ItemEntity>();
+            
+            if((int)GetState() <= (int)item.setMarioState)
+            {
+                print((int)GetState() + "<current state || new state>" + (int)item.setMarioState);
+                SetState(item.setMarioState);
+            }
+            
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            EnemyEntity enemy = collision.gameObject.GetComponent<EnemyEntity>();
+            if (!enemy.isDead && mRigidbody.velocity.y >= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+    void Shooting()
+    {
+        if (!mKeyShoot || GetState() != playerState.Fireflower) return;
+
+        ProjectileEntity newProjectile = Instantiate(mFireballPrefab, transform);
+        newProjectile.transform.position = new Vector3(transform.position.x + mPreviousDirection * mSpriteRenderer.size.x * 0.5f, transform.position.y, transform.position.z);
+        newProjectile.transform.SetParent(null);
+        newProjectile.initializeProjectile(mPreviousDirection, mRigidbody.velocity.x);
+
     }
 }

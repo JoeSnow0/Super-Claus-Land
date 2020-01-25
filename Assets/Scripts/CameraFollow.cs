@@ -54,7 +54,8 @@ public class CameraFollow : MonoBehaviour
     public void CheckIfTargetInSight()
     {
         //Vector2 position = mTarget.GetTransform().position;
-        
+
+        if (mTarget == null) return;
         if (transform.position.x < mTarget.transform.position.x)
         {
             

@@ -10,4 +10,5 @@ public class KeyboardInput : MonoBehaviour
     public KeyCode rightKey = KeyCode.RightArrow;
     public KeyCode upKey    = KeyCode.UpArrow;
     public KeyCode downKey  = KeyCode.DownArrow;
+    public KeyCode shootKey = KeyCode.X;
 }

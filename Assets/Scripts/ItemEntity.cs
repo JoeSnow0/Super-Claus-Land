@@ -7,6 +7,7 @@ public class ItemEntity : Entity
     [Header("Item")]
     [Tooltip("Choose which Item you wish for this to be")]
     [SerializeField] Item mItem;
+    public PlayerEntity.playerState setMarioState;
 
     override protected void Start()
     {
@@ -35,7 +36,7 @@ public class ItemEntity : Entity
     void InitializeItem()
     {
         if(mItem != null)
-        mSprite.sprite = mItem.mSprite;
+        mSpriteRenderer.sprite = mItem.mSprite;
         if (mItem.mMoves)
         {
             //TASK:Direction should be randomized
@@ -46,12 +47,17 @@ public class ItemEntity : Entity
         {
             mJumpPower = mItem.mJumpPower;
         }
+        setMarioState = mItem.setState;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject == mGameController.GetPlayerEntity().gameObject)
+        if(collision.gameObject.tag == "Player")
         {
             mGameController.RemoveEntity(this);
+        }
+        else
+        {
+            mDirection *= -1;
         }
     }
 }
